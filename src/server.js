@@ -5,7 +5,7 @@ var bodyParser = require('body-parser')
   , compression = require('compression')
 
 var db_api = require('./db_api-compiled')
-  , whitelist = require('./authentications/whitelist')
+  , whitelist = require('./whitelist')
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', whitelist)
