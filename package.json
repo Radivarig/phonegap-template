@@ -4,9 +4,10 @@
   "description": "server-template",
   "author": "Reslav Hollos",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "babel ./src/db_api.js --out-file ./src/db_api-compiled.js --stage 1; node src/server.js"
   },
   "dependencies": {
+    "babel": "^5.6.14",
     "body-parser": "^1.12.2",
     "compression": "^1.4.1",
     "express": "^4.12.2"

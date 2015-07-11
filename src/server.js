@@ -4,7 +4,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
   , compression = require('compression')
 
-var db_api = require('./db_api')
+var db_api = require('./db_api-compiled')
   , whitelist = require('./authentications/whitelist')
 
 var allowCrossDomain = function(req, res, next) {
