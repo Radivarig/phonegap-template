@@ -4,7 +4,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
   , compression = require('compression')
 
-var db_api = require('./db_api-compiled')
+var server_api = require('./server_api-compiled')
   , whitelist = require('./whitelist')
 
 var allowCrossDomain = function(req, res, next) {
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.enable('trust proxy')
 //app.use(express.static(__dirname + '/www'))
 
-app.post('/ajax_post', db_api.ajax_post)
+app.post('/ajax_post', server_api.ajax_post)
 
 app.listen(app.get('port'), function () {
   console.log('Server listening on port ' + app.get('port'))

@@ -1,7 +1,7 @@
 require('babel-core/polyfill')
 import { Actions } from 'flummox'
 
-var db_service = require('../../server/db_service.js')
+var server_api = require('../../server/server_api.js')
 
 export default class ActionsApp extends Actions {
   setState(s) { return s }
@@ -10,7 +10,7 @@ export default class ActionsApp extends Actions {
     //fill standard request fields
     req.username = 'test_user'
     
-    return await db_service.ajax_post(req)
+    return await server_api.ajax_post(req)
   }
 
   async makeRequestWrapper() {
