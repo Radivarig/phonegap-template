@@ -1,0 +1,23 @@
+{
+  "name": "client-for-a-server-template",
+  "version": "0.0.1",
+  "description": "client for a server template",
+  "main": "./src/entry.js",
+  "scripts": {
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors --port 9999"
+  },
+  "author": "Reslav Hollos",
+  "devDependencies": {
+    "webpack": "^1.8.11",
+    "webpack-dev-server": "^1.8.2"
+  },
+  "dependencies": {
+    "babel-core": "^5.2.17",
+    "babel-loader": "^5.0.0",
+    "babel-runtime": "^5.2.17",
+    "flummox": "^3.5.2",
+    "jquery": "^2.1.3",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3"
+  }
+}

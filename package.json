@@ -1,0 +1,14 @@
+{
+  "name": "server-template",
+  "version": "0.0.1",
+  "description": "server-template",
+  "author": "Reslav Hollos",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "compression": "^1.4.1",
+    "express": "^4.12.2"
+  }
+}
