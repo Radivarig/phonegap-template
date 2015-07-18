@@ -4,6 +4,7 @@
   "description": "client for a server template",
   "main": "./src/entry.js",
   "scripts": {
+    "inst": "export PYTHON=python2.7; npm i",
     "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors --port 9999"
   },
   "author": "Reslav Hollos",
