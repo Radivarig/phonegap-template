@@ -7,7 +7,7 @@ module.exports = {
   devtool: "source-map",
   module: {
     loaders: [
-      { test: /\.jsx?$/, loaders: ['babel-loader?stage=1'], exclude: /node_modules/ }
+      { test: /\.jsx?$/, loaders: ['babel', 'flowcheck', 'babel?blacklist=flow'], exclude: /node_modules/ }
     ]
   }
 }
