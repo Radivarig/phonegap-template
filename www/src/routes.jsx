@@ -16,27 +16,32 @@ var App = React.createClass({
 })
 
 var AppView = React.createClass({
-  handleChange: function(name, e) {
+  componentDidMount: function () {
+    if ( !this.props.request )
+      this.handleChange.bind(this, 'request')('{\n  "foo": "bla",\n  "a": "c"\n}')
+  }
+, handleChange: function(name, e) {
     var chg = {}
-    chg[name] = e.target.value
+    chg[name] = e.target ? e.target.value : e
     this.props.flux.getActions('app').setState(chg)
   }
 , sendMessage: function() {
-    var input = this.props.input
-    var req = {
-      input: input
-    }
-
+    var self = this
+    var req = JSON.parse(this.props.request)
     this.props.flux.getActions('app').makeRequest(req)
-      .then(function(res){
-        console.log('response', res)
+      .then(function(res) {
+        self.props.flux.getActions('app').setState({
+          response: res
+        })
+        console.log(res)
       })
   }
 , render: function() {
     return (
       <div>
-        <input type='text' value={this.props.input} onChange={this.handleChange.bind(this, 'input')}/>
+        <textarea cols={25} rows={5} type='text' value={this.props.request} onChange={this.handleChange.bind(this, 'request')}/>
         <button onClick={this.sendMessage}>send</button>
+        <textarea cols={25} rows={5} type='text' value={JSON.stringify(this.props.response)} disabled={true}/>
         <RouteHandler/>
       </div>
     )
