@@ -1,4 +1,3 @@
-require('babel/polyfill')
 import { Actions } from 'flummox'
 
 var server_api = require('../../server/server_api.js')

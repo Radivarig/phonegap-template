@@ -1,3 +1,5 @@
+require('babel-polyfill')
+
 var express = require('express')
   , app = express()
 
