@@ -6,7 +6,8 @@
             }
         }],
         "transform-flow-strip-types",
-        "transform-async-to-generator"
+        "transform-async-to-generator",
+        "transform-object-rest-spread"
     ],
     "presets": [
         "es2015"
