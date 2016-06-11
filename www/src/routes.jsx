@@ -1,6 +1,6 @@
 var React = require('react')
-var Router = require('react-router')
-  , { Route, DefaultRoute, RouteHandler, Navigation } = Router
+
+import { Router, Route, Link, browserHistory } from 'react-router'
 
 import FluxComponent from 'flummox/component'
 import { FluxAppSingleton } from './flux/FluxApp'
@@ -42,16 +42,16 @@ var AppView = React.createClass({
         <textarea cols={25} rows={5} type='text' value={this.props.request} onChange={this.handleChange.bind(this, 'request')}/>
         <button onClick={this.sendMessage}>send</button>
         <textarea cols={25} rows={5} type='text' value={JSON.stringify(this.props.response)} disabled={true}/>
-        <RouteHandler/>
       </div>
     )
   }
 })
 
-    //<DefaultRoute name="demo" handler={Demo}/>
 var routes = (
-  <Route name="app" path="/" handler={App}>
-  </Route>
+ <Router history={browserHistory}>
+    <Route path="/" component={App}>
+    </Route>
+  </Router>
 )
 
 module.exports = routes
