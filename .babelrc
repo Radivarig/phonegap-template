@@ -1,0 +1,11 @@
+{
+    "plugins": [
+        ["typecheck", {
+            "disable": {
+                "production": true
+            }
+        }],
+        "transform-flow-strip-types",
+        "transform-async-to-generator"
+    ]
+}

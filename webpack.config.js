@@ -19,7 +19,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loaders: ['babel', 'flowcheck', 'babel?blacklist=flow'], exclude: /node_modules/ }
+      { test: /\.jsx?$/, loaders: ['babel'], exclude: /node_modules/ }
     ]
   },
   externals: nodeModules
