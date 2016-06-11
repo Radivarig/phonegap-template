@@ -7,5 +7,8 @@
         }],
         "transform-flow-strip-types",
         "transform-async-to-generator"
+    ],
+    "presets": [
+        "es2015"
     ]
 }
