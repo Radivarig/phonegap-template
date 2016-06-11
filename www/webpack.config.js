@@ -9,5 +9,10 @@ module.exports = {
     loaders: [
       { test: /\.jsx?$/, loaders: ['babel'], exclude: /node_modules/ }
     ]
+  },
+  resolve: {
+    fallback: __dirname +"/node_modules",
+    root: __dirname +'/src/module_components',
+    extensions: ['', '.js', '.jsx'],
   }
 }
