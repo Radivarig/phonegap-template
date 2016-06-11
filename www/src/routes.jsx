@@ -5,6 +5,8 @@ import { Router, Route, Link, browserHistory } from 'react-router'
 import FluxComponent from 'flummox/component'
 import { FluxAppSingleton } from './flux/FluxApp'
 
+import type { appStateType } from 'types'
+
 var App = React.createClass({
   render: function(){
     return (
@@ -16,6 +18,12 @@ var App = React.createClass({
 })
 
 var AppView = React.createClass({
+  getInitialState(): appStateType {
+      return {
+        stateNumVar: 3,
+        stateStrVar: "ok",
+      }
+  },
   componentDidMount: function () {
     if ( !this.props.request )
       this.handleChange.bind(this, 'request')('{\n  "foo": "bla",\n  "a": "c"\n}')
