@@ -4,7 +4,8 @@
   "description": "async-babel-flowcheck-webpack-server",
   "author": "Reslav Hollos",
   "scripts": {
-    "dev": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --progress --colors --watch",
+    "build": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --progress --colors --build",
+    "watch": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --progress --colors --watch",
     "start": "./node_modules/nodemon/bin/nodemon.js ./build/backend.js"
   },
   "dependencies": {
