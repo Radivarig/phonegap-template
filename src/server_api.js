@@ -1,4 +1,4 @@
-const ajax_post = function(req, res) {
+const ajax_post = async function(req, res) {
   let rb = JSON.parse(JSON.stringify(req.body))
   console.log('request body: ', rb)
   res.send({request_body: rb})
