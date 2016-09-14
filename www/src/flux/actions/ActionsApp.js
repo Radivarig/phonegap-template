@@ -1,22 +1,13 @@
 import { Actions } from 'flummox'
 
-var server_api = require('../../server/server_api.js')
+const server_api = require('../../server/server_api.js')
 
 export default class ActionsApp extends Actions {
   
   setState(s) { return s }
 
-  async makeRequest(req){
-    //fill default request fields
-    req.username = 'test_user'
-    
+  async makeRequest(req) {
     return await server_api.ajax_post(req)
   }
 
-  // async makeRequestWrapper() {
-  //   var req = {
-  //     method: 'request_injection_example'
-  //   }
-  //   return await this.makeRequest(req)
-  // }
 }

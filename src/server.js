@@ -19,7 +19,7 @@ var allowCrossDomain = function(req, res, next) {
 app.set('port', process.env.PORT || 7777)
 app.use(compression())
 app.use(allowCrossDomain)
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.enable('trust proxy')
 //app.use(express.static(__dirname + '/www'))
 
