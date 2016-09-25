@@ -1,4 +1,6 @@
-export type appStateType = {
-  stateNumVar: number;        // ; semi-colon as divisor, no comas
-  stateStrVar: string | void; // optional string
+export type storeStateType = {
+  request: string;
+  response: string;
+  isFetching: boolean;
+  isError: boolean;
 }
