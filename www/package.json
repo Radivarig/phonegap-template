@@ -4,7 +4,7 @@
   "description": "client for a server template",
   "main": "./src/entry.js",
   "scripts": {
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors --port 9999",
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors",
     "build": "./node_modules/webpack/bin/webpack.js --build --config webpack.config.js --progress --colors"
   },
   "author": "Reslav Hollos",
