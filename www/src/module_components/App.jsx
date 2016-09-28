@@ -1,26 +1,36 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
-// TODO use async actions
-import { ajax_post } from '../server/server_api.js'
 
 const AppView = React.createClass({
   render() {
-    const onClickSubmit =() => this.props.onClickSubmit(this.props.request)
-    const response = this.props.isError ? 'Error' : this.props.response
+    const buttonText = this.props.isFetching ?
+      'Please wait..'
+    : 'Send'
+
+    const response = this.props.isError ?
+      'Error happened. Please try again.'
+    : this.props.response
+
     return (
       <div>
 
         <textarea
-          cols={25} rows={5} type='text'
+          cols={25} rows={5}
           value={this.props.request}
           onChange={this.props.onChangeRequest}
         />
 
-        <button onClick={onClickSubmit}>send</button>
+        <button
+          disabled={this.props.isFetching}
+          onClick={this.props.onClickSubmit}
+        >
+          {buttonText}
+        </button>
 
-        <textarea disabled
-          cols={25} rows={5} type='text'
+        <textarea
+          cols={25} rows={5}
           value={response}
+          disabled
         />
 
       </div>
@@ -28,7 +38,7 @@ const AppView = React.createClass({
   }
 })
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     request: state.request,
     response: state.response,
@@ -37,35 +47,39 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
-
     onChangeRequest: (e) => dispatch({
       type: 'change_request',
       request: e.target.value,
     }),
 
-    onClickSubmit: async (req: string) => {
-      dispatch({type: 'submit_request'})
-      await ajax_post(JSON.parse(req))
-        .then((res) =>
-          dispatch({
-            type: 'submit_request', status: 'success',
-            response: JSON.stringify(res),
+    onClickSubmit: () => {
+      dispatch(async (action, getState, extra) => {
+        const {ajax_post} = extra
+        const req: string = getState().request
+
+        dispatch({type: 'submit_request'})
+
+        await ajax_post(JSON.parse(req))
+          .then((res) =>
+            dispatch({
+              type: 'submit_request', status: 'success',
+              response: JSON.stringify(res),
+            })
+          )
+          .catch((err) => {
+            console.log (err)
+            dispatch({
+              type: 'submit_request', status: 'error',
+            })
           })
-        )
-        .catch((err) => {
-          console.log (err)
-          dispatch({
-            type: 'submit_request', status: 'error',
-          })
-        })
+      })
     },
 
   }
 }
 
-// Connected Component
 const ConnectedAppView = connect(
   mapStateToProps,
   mapDispatchToProps

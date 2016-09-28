@@ -1,5 +1,7 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import type { storeStateType } from 'types'
+import { ajax_post } from './server/server_api.js'
 
 const initReduxGlobalStore = () => {
   const initialState: storeStateType = {
@@ -46,7 +48,12 @@ const initReduxGlobalStore = () => {
   }
 
   // Global store
-  window.ReduxStore = createStore(reducer)
+  window.ReduxStore = createStore(
+    reducer,
+    applyMiddleware(thunk.withExtraArgument({
+      ajax_post,
+    }))
+  )
 }
 
 module.exports = initReduxGlobalStore
