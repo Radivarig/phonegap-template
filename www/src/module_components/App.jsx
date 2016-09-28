@@ -1,5 +1,6 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
+import getReduxStore from 'getReduxStore'
 
 const AppView = React.createClass({
   render() {
@@ -88,7 +89,7 @@ const ConnectedAppView = connect(
 const App = React.createClass({
   render() {
     return (
-      <Provider store={window.ReduxStore}>
+      <Provider store={getReduxStore()}>
         <ConnectedAppView/>
       </Provider>
     )
