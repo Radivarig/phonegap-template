@@ -2,8 +2,8 @@ import 'babel-polyfill'
 import React from'react'
 import ReactDOM from'react-dom'
 
-import initReduxGlobalStore from './initReduxGlobalStore.jsx'
-initReduxGlobalStore()
+import initGlobalReduxStore from './initGlobalReduxStore.jsx'
+initGlobalReduxStore()
 
 import routes from'./routes.jsx'
 

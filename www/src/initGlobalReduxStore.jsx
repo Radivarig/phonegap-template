@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import type { storeStateType } from 'types'
 import { ajax_post } from './server/server_api.js'
 
-const initReduxGlobalStore = () => {
+module.exports = () => {
   const initialState: storeStateType = {
     request: '{\n  "foo": "bla",\n  "a": "c"\n}',
     response: '',
@@ -55,5 +55,3 @@ const initReduxGlobalStore = () => {
     }))
   )
 }
-
-module.exports = initReduxGlobalStore
