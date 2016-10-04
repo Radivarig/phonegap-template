@@ -4,12 +4,13 @@
   "description": "client for a server template",
   "main": "./src/entry.js",
   "scripts": {
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors",
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors --inline --hot",
     "build": "./node_modules/webpack/bin/webpack.js --build --config webpack.config.js --progress --colors"
   },
   "author": "Reslav Hollos",
   "devDependencies": {
     "babel-loader": "^6.2.4",
+    "react-hot-loader": "^3.0.0-beta.5",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
