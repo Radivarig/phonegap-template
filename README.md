@@ -1,3 +1,11 @@
+# Description
+
+This is a template for react development with `phonegap` cross-platform support.
+
+Phonegap has a minimal `config.xml` and its `www/` folder contains symlinks to `../../client/(required_files)`.
+
+In short, you get [react-hot-loader](https://github.com/gaearon/react-hot-loader) with **state preservation** for browser and **live reload** for [Phonegap Developer App](http://docs.phonegap.com/getting-started/2-install-mobile-app/) that syncs the project to your mobile devices on file changes.
+
 # Usage
 
 ```bash
