@@ -1,7 +1,10 @@
 node_modules/
 npm-debug.log
 
-server/build/
-
 bundle.js
 bundle.js.map
+
+server/build/
+
+phonegap/platforms/
+phonegap/plugins/
