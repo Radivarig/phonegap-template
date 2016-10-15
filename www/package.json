@@ -4,8 +4,8 @@
   "description": "client for a server template",
   "main": "./src/entry.js",
   "scripts": {
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors --inline --hot",
-    "build": "./node_modules/webpack/bin/webpack.js --build --config webpack.config.js --progress --colors"
+    "dev": "webpack-dev-server --config webpack.config.js --progress --colors --inline --hot",
+    "build": "webpack --config webpack.config.js --progress --colors --build"
   },
   "author": "Reslav Hollos",
   "devDependencies": {
@@ -25,7 +25,7 @@
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
     "react": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
     "redux": "^3.6.0",
