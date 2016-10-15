@@ -35,29 +35,29 @@ npm run start # nodemon restarts server on file changes
 
 ### Client
 
-- react
+#### react
   - router
   - hot-loader
 
-- redux
+#### redux
   - thunk
 
-- webpack
+#### webpack
   - dev-server
 
-- babel
+#### babel
   - es6
   - typecheck
   - async
 
 ### Server
 
-- webpack
+#### webpack
   - dev-server
   - express
   - nodemon
 
-- babel
+#### babel
   - es6
   - typecheck
   - async
