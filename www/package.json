@@ -5,7 +5,8 @@
   "main": "./src/entry.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.js --progress --colors --inline --hot",
-    "build": "webpack --config webpack.config.js --progress --colors --build"
+    "build": "webpack --config webpack.config.js --progress --colors --build",
+    "watch": "webpack --config webpack.config.js --progress --colors --watch"
   },
   "author": "Reslav Hollos",
   "devDependencies": {
