@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 
 import { AppContainer } from 'react-hot-loader'
 
-require('./initGlobalReduxStore.jsx')()
+require('./redux/initGlobalReduxStore.jsx')()
 
 import routes from './routes.jsx'
 
