@@ -1,19 +1,15 @@
 import type { requestResponseStateType } from 'types'
 
-const requestResponse = (state, action) => {
+const initialState: requestResponseStateType = {
+  request: '{\n  "foo": "bla",\n  "a": "c"\n}',
+  response: '',
+  isFetching: false,
+  isError: false,
+}
 
-  const initialState: requestResponseStateType = {
-    request: '{\n  "foo": "bla",\n  "a": "c"\n}',
-    response: '',
-    isFetching: false,
-    isError: false,
-  }
-  if (state === undefined)
-    return initialState
-
-  // has to return whole state with different reference
+module.exports = (state = initialState, action) => {
   const assign = (obj) => {
-    const s: storeStateType = Object.assign({}, state, obj)
+    const s: requestResponseStateType = Object.assign({}, state, obj)
     return s
   }
 
@@ -39,8 +35,6 @@ const requestResponse = (state, action) => {
       return assign({isFetching: true})
 
     default:
-      console.error('Action not matched:', action)
       return state
   }
 }
-module.exports = requestResponse
