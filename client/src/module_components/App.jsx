@@ -40,11 +40,12 @@ const AppView = React.createClass({
 })
 
 const mapStateToProps = (state) => {
+  const s = state.requestResponse
   return {
-    request: state.request,
-    response: state.response,
-    isFetching: state.isFetching,
-    isError: state.isError,
+    request: s.request,
+    response: s.response,
+    isFetching: s.isFetching,
+    isError: s.isError,
   }
 }
 
