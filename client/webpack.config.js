@@ -11,8 +11,8 @@ module.exports = {
     ]
   },
   resolve: {
+    modulesDirectories: ['src/module_components', 'src/redux'],
     fallback: __dirname +"/node_modules",
-    root: __dirname +'/src/module_components',
     extensions: ['', '.js', '.jsx'],
   }
 }
