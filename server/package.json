@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "async-babel-flowcheck-webpack-server",
   "author": "Reslav Hollos",
+  "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js --progress --colors --build",
     "watch": "webpack --config webpack.config.js --progress --colors --watch",

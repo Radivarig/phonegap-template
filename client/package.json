@@ -2,13 +2,13 @@
   "name": "client-for-a-server-template",
   "version": "0.0.1",
   "description": "client for a server template",
-  "main": "./src/entry.js",
+  "author": "Reslav Hollos",
+  "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.js --progress --colors --inline --hot",
     "build": "webpack --config webpack.config.js --progress --colors --build",
     "watch": "webpack --config webpack.config.js --progress --colors --watch"
   },
-  "author": "Reslav Hollos",
   "devDependencies": {
     "babel-loader": "^6.2.4",
     "react-hot-loader": "^3.0.0-beta.5",
