@@ -1,4 +1,9 @@
-import type { requestResponseStateType } from 'types'
+export type requestResponseStateType = {
+  request: string;
+  response: string;
+  isFetching: boolean;
+  isError: boolean;
+}
 
 const initialState: requestResponseStateType = {
   request: '{\n  "foo": "bla",\n  "a": "c"\n}',
@@ -7,7 +12,7 @@ const initialState: requestResponseStateType = {
   isError: false,
 }
 
-module.exports = (state = initialState, action) => {
+export const requestResponse = (state = initialState, action) => {
   const assign = (obj) => {
     const s: requestResponseStateType = Object.assign({}, state, obj)
     return s
