@@ -1,15 +1,15 @@
-export type requestResponseStateType = {
-  request: string;
-  response: string;
-  isFetching: boolean;
-  isError: boolean;
-}
+import { Map } from 'extendable-immutable'
+import Immutable, { List } from 'immutable'
 
-const initialState: requestResponseStateType = {
-  request: '{\n  "foo": "bla",\n  "a": "c"\n}',
-  response: '',
-  isFetching: false,
-  isError: false,
+export class RequestResponse extends Map {
+  request: string
+  response: string
+  isFetching: boolean
+  isError: boolean
+
+  constructor(request: string = '') {
+    super({request, response: '', isFetching: false, isError: false})
+  }
 }
 
 export const actions = {
@@ -23,7 +23,7 @@ export const actions = {
   submitRequest(dispatch: Function) {
     return async function(action, getState, extra) {
       const {ajax_post} = extra
-      const req: string = getState().requestResponse.request
+      const req: string = getState().requestResponse.get('request')
 
       dispatch({type: 'SUBMIT_REQUEST'})
 
@@ -51,29 +51,27 @@ export const getRequestResponseDispatches = (dispatch) => {
   }
 }
 
+const initialState: RequestResponse = new RequestResponse('{\n  "foo": "bla",\n  "a": "c"\n}')
 export const requestResponse = (state = initialState, action) => {
-  const assign = (obj): requestResponseStateType => Object.assign({}, state, obj)
 
   switch (action.type)
   {
     case 'CHANGE_REQUEST':
-      return assign({request: action.request})
+      return state.set('request', action.request)
 
     case 'SUBMIT_REQUEST':
       if (action.status == 'SUCCESS') {
-        return assign({
-          isFetching: false,
-          isError: false,
-          response: action.response,
-        })
+        return state
+          .set('isFetching', false)
+          .set('isError', false)
+          .set('response', action.response)
       }
       else if (action.status == 'ERROR') {
-        return assign({
-          isFetching: false,
-          isError: true,
-        })
+        return state
+          .set('isFetching', false)
+          .set('isError', true)
       }
-      return assign({isFetching: true})
+      return state.set('isFetching', true)
 
     default:
       return state

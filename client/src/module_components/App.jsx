@@ -46,10 +46,10 @@ const AppView = React.createClass({
 const mapStateToProps = (state) => {
   const s = state.requestResponse
   return {
-    request: s.request,
-    response: s.response,
-    isFetching: s.isFetching,
-    isError: s.isError,
+    request: s.get('request'),
+    response: s.get('response'),
+    isFetching: s.get('isFetching'),
+    isError: s.get('isError'),
   }
 }
 const mapDispatchToProps = (dispatch) => {
