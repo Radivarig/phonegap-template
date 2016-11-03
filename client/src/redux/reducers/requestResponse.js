@@ -1,27 +1,27 @@
-import { Map } from 'extendable-immutable'
+import { Map as EMap} from 'extendable-immutable'
 import Immutable, { List } from 'immutable'
 
-export class RequestResponse extends Map {
+export class RequestResponse extends EMap {
   request: string
   response: string
   isFetching: boolean
   isError: boolean
 
-  constructor(request: string = '') {
+  constructor (request: string = '') {
     super({request, response: '', isFetching: false, isError: false})
   }
 }
 
 export const actions = {
-  changeRequest(request: string) {
+  changeRequest (request: string) {
     return {
       type: 'CHANGE_REQUEST',
       request,
     }
   },
 
-  submitRequest(dispatch: Function) {
-    return async function(action, getState, extra) {
+  submitRequest (dispatch: Function) {
+    return async function (action, getState, extra) {
       const {ajax_post} = extra
       const req: string = getState().requestResponse.get('request')
 
@@ -44,18 +44,16 @@ export const actions = {
   },
 }
 
-export const getRequestResponseDispatches = (dispatch) => {
-  return {
-    changeRequest: (...args) => dispatch(actions.changeRequest.apply(null, args)),
-    submitRequest: () => dispatch(actions.submitRequest(dispatch)),
-  }
-}
+export const getRequestResponseDispatches = (dispatch) =>
+   ({
+     changeRequest: (...args) => dispatch(actions.changeRequest.apply(null, args)),
+     submitRequest: () => dispatch(actions.submitRequest(dispatch)),
+   })
 
 const initialState: RequestResponse = new RequestResponse('{\n  "foo": "bla",\n  "a": "c"\n}')
 export const requestResponse = (state = initialState, action) => {
 
-  switch (action.type)
-  {
+  switch (action.type) {
     case 'CHANGE_REQUEST':
       return state.set('request', action.request)
 

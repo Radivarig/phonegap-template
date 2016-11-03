@@ -8,12 +8,10 @@ import { AppContainer } from 'react-hot-loader'
 
 require('./redux/initGlobalReduxStore.jsx')()
 
-import routes from './routes.jsx'
-
 const renderRoutes = () => {
-    const routes = require('./routes.jsx')
-    const container = <AppContainer>{routes}</AppContainer>
-    ReactDOM.render(container, document.getElementById('app'))
+  const routes = require('./routes.jsx')
+  const container = <AppContainer>{routes}</AppContainer>
+  ReactDOM.render(container, document.getElementById('app'))
 }
 renderRoutes()
 

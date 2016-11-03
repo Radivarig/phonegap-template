@@ -4,7 +4,7 @@ import getReduxStore from 'getReduxStore'
 import { getRequestResponseDispatches } from 'reducers/requestResponse'
 
 const AppView = React.createClass({
-  render() {
+  render () {
     const buttonText = this.props.isFetching ?
       'Please wait..'
     : 'Send'
@@ -40,7 +40,7 @@ const AppView = React.createClass({
 
       </div>
     )
-  }
+  },
 })
 
 const mapStateToProps = (state) => {
@@ -52,10 +52,9 @@ const mapStateToProps = (state) => {
     isError: s.get('isError'),
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return Object.assign(getRequestResponseDispatches(dispatch), {
-  })
-}
+const mapDispatchToProps = (dispatch) =>
+   Object.assign(getRequestResponseDispatches(dispatch), {
+   })
 
 const ConnectedAppView = connect(
   mapStateToProps,
@@ -63,13 +62,13 @@ const ConnectedAppView = connect(
 ) (AppView)
 
 const App = React.createClass({
-  render() {
+  render () {
     return (
       <Provider store={getReduxStore()}>
         <ConnectedAppView/>
       </Provider>
     )
-  }
+  },
 })
 
 module.exports = App
