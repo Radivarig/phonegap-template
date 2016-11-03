@@ -35,7 +35,7 @@ export const actions = {
           })
         )
         .catch((err) => {
-          console.log (err)
+          // console.log (err)
           dispatch({
             type: 'SUBMIT_REQUEST', status: 'ERROR',
           })
@@ -60,13 +60,13 @@ export const requestResponse = (state = initialState, action) => {
       return state.set('request', action.request)
 
     case 'SUBMIT_REQUEST':
-      if (action.status == 'SUCCESS') {
+      if (action.status === 'SUCCESS') {
         return state
           .set('isFetching', false)
           .set('isError', false)
           .set('response', action.response)
       }
-      else if (action.status == 'ERROR') {
+      else if (action.status === 'ERROR') {
         return state
           .set('isFetching', false)
           .set('isError', true)

@@ -1,0 +1,60 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+   env: {
+      'es6': true,
+      'browser': true,
+      'commonjs': true,
+  },
+  "plugins": [
+    "react",
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+  ],
+  "rules": {
+    "no-unused-vars": 0,
+
+    strict: [2, "global"],
+    "semi": [2, "never"],
+    "no-tabs": 2,
+    "no-template-curly-in-string": 2,
+    "no-unsafe-negation": 2,
+    "accessor-pairs": [2, {
+      "getWithoutSet": true,
+    }],
+    "array-callback-return": 2,
+    "block-scoped-var": 2,
+    "class-methods-use-this": [2, { "exceptMethods": [] }],
+    "eqeqeq": 2,
+    "no-prototype-builtins": 2,
+    "no-else-return": 2,
+    "no-global-assign": [2, {"exceptions": []}],
+    "no-implicit-globals": 2,
+    "no-loop-func": 2,
+    "no-fallthrough": 2,
+    "no-floating-decimal": 2,
+    "no-return-assign": 2,
+    "no-sequences": 2,
+    "no-unmodified-loop-condition": 2,
+
+
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/no-danger": 2,
+    "react/forbid-component-props": [2, { "forbid": [
+      "className",
+      "style",
+    ] }],
+
+    "react/no-did-mount-set-state": [2, "disallow-in-func"],
+
+    "react/display-name": 0,
+    "react/prop-types": 0,
+  },
+}
