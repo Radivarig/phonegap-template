@@ -1,6 +1,7 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
 import getReduxStore from 'getReduxStore'
+import { getRequestResponseDispatches } from 'reducers/requestResponse'
 
 const AppView = React.createClass({
   render() {
@@ -12,18 +13,21 @@ const AppView = React.createClass({
       'Error happened. Please try again.'
     : this.props.response
 
+    const onChangeRequest = (e) => this.props.changeRequest(e.target.value)
+    const onSubmitRequest = this.props.submitRequest
+
     return (
       <div>
 
         <textarea
           cols={25} rows={5}
           value={this.props.request}
-          onChange={this.props.onChangeRequest}
+          onChange={onChangeRequest}
         />
 
         <button
           disabled={this.props.isFetching}
-          onClick={this.props.onClickSubmit}
+          onClick={onSubmitRequest}
         >
           {buttonText}
         </button>
@@ -48,38 +52,9 @@ const mapStateToProps = (state) => {
     isError: s.isError,
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onChangeRequest: (e) => dispatch({
-      type: 'change_request',
-      request: e.target.value,
-    }),
-
-    onClickSubmit: () => {
-      dispatch(async (action, getState, extra) => {
-        const {ajax_post} = extra
-        const req: string = getState().request
-
-        dispatch({type: 'submit_request'})
-
-        await ajax_post(JSON.parse(req))
-          .then((res) =>
-            dispatch({
-              type: 'submit_request', status: 'success',
-              response: JSON.stringify(res),
-            })
-          )
-          .catch((err) => {
-            console.log (err)
-            dispatch({
-              type: 'submit_request', status: 'error',
-            })
-          })
-      })
-    },
-
-  }
+  return Object.assign(getRequestResponseDispatches(dispatch), {
+  })
 }
 
 const ConnectedAppView = connect(
