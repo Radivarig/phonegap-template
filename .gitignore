@@ -8,3 +8,5 @@ server/build/
 
 phonegap/platforms/
 phonegap/plugins/
+
+!phonegap/www/*
