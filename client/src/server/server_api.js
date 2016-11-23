@@ -12,7 +12,7 @@ const request = (method, url, data) =>
 
 const server_api = {
   ajax_post (data) {
-    return request('POST', ajax_URL + '/ajax_post', data)
+    return request('POST', `${ajax_URL}/ajax_post`, data)
   },
 }
 

@@ -65,7 +65,7 @@ const App = React.createClass({
   render () {
     return (
       <Provider store={getReduxStore()}>
-        <ConnectedAppView/>
+        <ConnectedAppView />
       </Provider>
     )
   },
