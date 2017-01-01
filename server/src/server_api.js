@@ -1,4 +1,4 @@
-const ajax_post = async function(req, res) {
+export const ajax_post = async function(req, res) {
   let rb = JSON.parse(JSON.stringify(req.body))
   console.log('request body: ', rb)
   res.send({request_body: rb})
@@ -11,6 +11,3 @@ const ajax_post = async function(req, res) {
   }
 }
 
-module.exports = {
-  ajax_post
-}
