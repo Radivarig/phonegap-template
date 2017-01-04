@@ -15,10 +15,14 @@ module.exports = {
     path: path.join(__dirname, 'build'),
     filename: 'backend.js'
   },
+  devtool: "source-map",
   module: {
     loaders: [
-      { test: /\.jsx?$/, loaders: ['babel'], exclude: /node_modules/ }
+      { test: /\.jsx?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/ }
     ]
+  },
+    eslint: {
+    fix: true
   },
   externals: nodeModules
 }

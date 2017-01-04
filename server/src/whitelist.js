@@ -1,5 +1,5 @@
-var whitelist = [
-  'localhost'
+const whitelist = [
+  'localhost',
 ]
 
 module.exports = whitelist
