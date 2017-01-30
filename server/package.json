@@ -5,8 +5,8 @@
   "author": "Reslav Hollos",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --config webpack.config.js --progress --colors --build",
-    "watch": "webpack --config webpack.config.js --progress --colors --watch",
+    "build": "webpack --progress --colors --build",
+    "watch": "webpack --progress --colors --watch",
     "start": "nodemon ./src/server.js --exec babel-node",
     "start:build": "nodemon ./build/backend.js"
   },
