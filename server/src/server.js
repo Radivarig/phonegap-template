@@ -1,5 +1,3 @@
-require('babel-polyfill')
-
 const express = require('express')
 const app = express()
 

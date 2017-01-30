@@ -7,7 +7,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --progress --colors --build",
     "watch": "webpack --config webpack.config.js --progress --colors --watch",
-    "start": "nodemon ./build/backend.js"
+    "start": "nodemon ./src/server.js --exec babel-node",
+    "start:build": "nodemon ./build/backend.js"
   },
   "dependencies": {
     "babel-cli": "^6.22.2",
@@ -29,5 +30,8 @@
     "fs": "0.0.2",
     "nodemon": "^1.9.2",
     "webpack": "^1.13.1"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.22.0"
   }
 }

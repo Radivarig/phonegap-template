@@ -6,9 +6,11 @@
         }],
         "transform-flow-strip-types",
         "transform-async-to-generator",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-runtime",
     ],
     "presets": [
         "es2015"
-    ]
+    ],
+    retainLines: true,
 }
