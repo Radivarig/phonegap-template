@@ -1,3 +1,5 @@
+require("babel-register")
+
 module.exports = {
   test: {
     client: 'pg',
@@ -13,8 +15,9 @@ module.exports = {
   },
   production: {
     client: 'pg',
+    // eslint-disable-next-line no-undef
     connection: process.env.DATABASE_URL,
     migrations: {directory: './db/migrations'},
     seeds: {directory: './db/seeds/production'},
-  }
+  },
 }
