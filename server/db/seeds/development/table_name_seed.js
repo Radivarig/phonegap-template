@@ -1,3 +1,5 @@
-exports.seed = (knex, Promise) =>
-knex('table_name').del()
-  .then(() => knex('table_name').insert({string_field: 'str'}))
+exports.seed = (knex, Promise) => {
+  const tableName = 'users'
+  return knex(tableName).del()
+  //.then(() => knex(tableName).insert({email: 'testuser@test.com'}))
+}
