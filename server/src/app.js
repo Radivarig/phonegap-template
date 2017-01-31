@@ -4,7 +4,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const compression = require('compression')
 
-const server_api = require('./server_api')
+const {ajaxHandler} = require('./ajaxHandler.js')
 const whitelist = require('./whitelist')
 
 const allowCrossDomain = function (req, res, next) {
@@ -20,6 +20,6 @@ app.use(allowCrossDomain)
 app.use(bodyParser.json())
 app.enable('trust proxy')
 
-app.post('/ajax_post', server_api.ajax_post)
+app.post('/ajax_post', ajaxHandler.handlePostRequest)
 
 module.exports = app

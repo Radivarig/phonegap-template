@@ -5,37 +5,39 @@ const expect = chai.expect
 const chaiHttp = require('chai-http')
 chai.use(chaiHttp)
 const app = require('../src/app.js')
-var knex = require('../db/knex.js')
 
-describe('beforeEach afterEach', () => {
+const knex = require('../db/knex.js')
+const {ajaxHandler} = require ('../src/ajaxHandler.js')
 
-  beforeEach((done) =>
-    knex.migrate.rollback()
+describe('API ajaxHandler', () => {
+
+  beforeEach(async () =>
+    await knex.migrate.rollback()
     .then(() =>
       knex.migrate.latest()
       .then(() =>
         knex.seed.run()
-        .then(done)
       )
     )
   )
 
-  afterEach((done) =>
-    knex.migrate.rollback()
-    .then(done)
+  afterEach(async () =>
+    await knex.migrate.rollback()
   )
+
+  it('`handleIfUnregisteredUser` should insert new user to table `unregistered`', async () => {
+    const email = 'testuser@test.com'
+
+    const id_from_users = await ajaxHandler.getColumn ('id', 'users', {email})
+    expect (id_from_users).to.equal(undefined)
+
+    const unregisteredUser: boolean = await ajaxHandler.handleIfUnregisteredUser(email)
+    expect (unregisteredUser).to.equal(true)
+
+    const id_from_unregistered = await ajaxHandler.getColumn ('id', 'unregistered', {email})
+    expect (id_from_unregistered).to.not.equal(undefined)
+
+  })
+
 })
 
-describe('test example', () => {
-  it('POST /ajax_post should return string_field', (done) => {
-    chai.request(app.listen())
-    .post('/ajax_post')
-    .send({method: 'get_data'})
-    .end((err, res) => {
-      expect(err).to.be.null
-      expect(res).to.be.json
-      expect(res.statusCode).to.equal(200)
-      done()
-    })
-  })
-})
