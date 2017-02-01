@@ -23,15 +23,17 @@ const email = 'testuser@test.com'
 
 describe('API loginHandler.js', () => {
 
-  it('`handleIfUnregisteredUser` should insert new user to table `unregistered`', async () => {
-    const id_from_users = await dbHandler.getColumn ('id', 'users', {email})
-    expect (id_from_users).to.equal(undefined)
+  describe('handleIfUnregisteredUser', () => {
+    it('should insert new user to table `unregistered`', async () => {
+      const id_users = await dbHandler.getColumn ('id', tables.users, {email})
+      expect (id_users).to.equal(undefined)
 
-    const unregisteredUser: boolean = await loginHandler.handleIfUnregisteredUser(email)
-    expect (unregisteredUser).to.equal(true)
+      const unregisteredUser: boolean = await loginHandler.handleIfUnregisteredUser(email)
+      expect (unregisteredUser).to.equal(true)
 
-    const id_from_unregistered = await dbHandler.getColumn ('id', 'unregistered', {email})
-    expect (id_from_unregistered).to.not.equal(undefined)
+      const id_unregistered = await dbHandler.getColumn ('id', tables.unregistered, {email})
+      expect (id_unregistered).to.not.equal(undefined)
+    })
   })
 
   describe('insertOrUpdateTokenToUnconfirmed', () => {
