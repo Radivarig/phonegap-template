@@ -32,4 +32,16 @@ export const loginHandler = {
     return id
   },
 
+  confirmToken: async (email: string, token: string): Promise<Object | void> => {
+    const id = await dbHandler.getColumn ('id', 'users', {email})
+    if (! id) {
+      const id_unconfirmed = dbHandler.getColumn ('id', tables.unconfirmed, {email})
+      if (id_unconfirmed) {
+        await knex(tables.unconfirmed).where({email}).del()
+        await knex.insert({email}).into(tables.users)
+      }
+      else return {error: ''}
+    }
+  },
+
 }
