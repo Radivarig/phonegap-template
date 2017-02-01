@@ -66,6 +66,12 @@ export const loginHandler = {
     return (sessions && sessions[token]) !== undefined
   },
 
+  setData: async (email: string, toAssign: Object): void => {
+    const data = await dbHandler.getColumn ('data', tables.users, {email})
+    Object.assign (data, toAssign)
+    await knex(tables.users).where({email}).update({data})
+  },
+
   getData: async (email: string, propList: Array<string> | string): Promise<Object> => {
     const data = await dbHandler.getColumn ('data', tables.users, {email})
     const returnData = {}

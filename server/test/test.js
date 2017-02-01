@@ -158,7 +158,7 @@ describe('API loginHandler.js', () => {
   })
 
   describe('getData', () => {
-    it('should return an object with keys and their values from propList', async () => {
+    it('should return an object with keys from arg `propList`', async () => {
       const token = 'token'
       // login
       await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
@@ -179,5 +179,28 @@ describe('API loginHandler.js', () => {
     })
   })
 
+  describe('setData', () => {
+    it('should assign passed object to json `data`', async () => {
+      const token = 'token'
+      // login
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+      await loginHandler.confirmToken (email, token)
+
+      const toAssign = {
+        num_val: 45,
+        str_val: 'str',
+        bool_val: false,
+        obj_val: {a: 1},
+      }
+      const toAssignKeys = Object.keys(toAssign)
+
+      await loginHandler.setData(email, toAssign)
+      const data = await loginHandler.getData(email, toAssignKeys)
+      expect (data).to.be.an('object')
+
+      // json equality
+      expect (JSON.stringify(data)).to.equal(JSON.stringify(toAssign))
+    })
+  })
 
 })
