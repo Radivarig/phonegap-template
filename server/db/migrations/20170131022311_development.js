@@ -11,6 +11,7 @@ exports.up = async (knex) => {
         table.increments('id').primary()
         table.string('email')
         table.json('data').defaultTo('{}')
+        table.json('sessions').defaultTo('{}')
       }
       else if (tableName == 'unregistered') {
         table.increments('id').primary()

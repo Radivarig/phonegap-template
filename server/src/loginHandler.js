@@ -49,7 +49,11 @@ export const loginHandler = {
     if (! id)
       id = (await knex.insert({email}).into(tables.users).returning('id'))[0]
 
-    // handle session
+    // add session
+    const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
+    // TODO add timestamp, agent
+    sessions[token] = {}
+    await knex(tables.users).where({email}).update({sessions})
   },
 
 }
