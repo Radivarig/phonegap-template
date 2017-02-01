@@ -10,3 +10,5 @@ phonegap/platforms/
 phonegap/plugins/
 
 !phonegap/www/*
+
+config/
