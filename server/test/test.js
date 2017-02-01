@@ -154,7 +154,28 @@ describe('API loginHandler.js', () => {
       // different token
       is_session_valid = await loginHandler.getSessionValidity(email_different, token_different)
       expect (is_session_valid).to.equal(false)
+    })
+  })
 
+  describe('getData', () => {
+    it('should return an object with keys and their values from propList', async () => {
+      const token = 'token'
+      // login
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+      await loginHandler.confirmToken (email, token)
+
+      // single property
+      const single_property = 'single_property'
+      const data_single = await loginHandler.getData(email, single_property)
+      expect (data_single).to.be.an('object')
+      expect (data_single).to.have.property(single_property)
+
+      // list of properties
+      const list_of_properties = ['list', 'of', 'properties']
+      const data_multiple = await loginHandler.getData(email, list_of_properties)
+      expect (data_multiple).to.be.an('object')
+      for (const p of list_of_properties)
+        expect (data_multiple).to.have.property(p)
     })
   })
 

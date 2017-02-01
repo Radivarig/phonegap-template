@@ -63,7 +63,20 @@ export const loginHandler = {
 
   getSessionValidity: async (email: string, token: string): Promise<boolean> => {
     const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
-    return (sessions && sessions[token]) != undefined
+    return (sessions && sessions[token]) !== undefined
+  },
+
+  getData: async (email: string, propList: Array<string> | string): Promise<Object> => {
+    const data = await dbHandler.getColumn ('data', tables.users, {email})
+    const returnData = {}
+
+    if (typeof (propList) === 'string')
+      propList = [propList]
+
+    for (const p of propList)
+      returnData[p] = data[p]
+
+    return returnData
   },
 
 }
