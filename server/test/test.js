@@ -98,7 +98,7 @@ describe('API loginHandler.js', () => {
     it('should return error `token_mismatch` if tokens do not match', async () => {
       // adding new user to unconfirmed
       const token = 'token'
-      const token_different = 'token_different'
+      const token_different = token + '_different'
       await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
 
       const res = await loginHandler.confirmToken (email, token_different)
