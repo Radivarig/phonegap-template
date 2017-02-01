@@ -51,6 +51,11 @@ export const loginHandler = {
 
     // add session
     const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
+
+    // if called multiple times with same token
+    if (sessions[token])
+      return {error: {message: 'token_consumed'}}
+
     // TODO add timestamp, agent
     sessions[token] = {}
     await knex(tables.users).where({email}).update({sessions})

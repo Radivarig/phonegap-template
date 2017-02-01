@@ -116,6 +116,23 @@ describe('API loginHandler.js', () => {
       expect (sessions).to.have.property(token)
     })
 
+    it('should return error `token_consumed` if token exists in sessions', async () => {
+      const token = 'token'
+
+      // first login
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+      await loginHandler.confirmToken (email, token)
+
+      // second login with same token
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+      const res = await loginHandler.confirmToken (email, token)
+
+      expect (res).to.be.an('object')
+      expect (res).to.have.property('error')
+      expect (res.error.message).to.equal('token_consumed')
+    })
+
+
   })
 
 })
