@@ -14,6 +14,11 @@ export const ajaxHandler = {
       res.send (returnObject)
     }
 
+    const {
+      email,
+    } = req.body
+
+    if (ajaxHandler.handleIfUnregisteredUser(email)) return packResponse ()
   },
 
   handleIfUnregisteredUser: async (email: string): Promise<boolean> => {
@@ -28,8 +33,8 @@ export const ajaxHandler = {
     return (! id)
   },
 
-  insertUserToUnregistered: async (email: string): Promise<number> => (
-    await knex.insert({email}).into('unregistered').returning('id'))[0],
+  insertUserToUnregistered: async (email: string): Promise<number> =>
+  (await knex.insert({email}).into('unregistered').returning('id'))[0],
 
   getColumn: async (select: string, table: string, where: Object = {}) =>
     await knex.select(select).from(table).where(where)
