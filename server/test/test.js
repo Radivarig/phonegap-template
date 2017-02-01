@@ -7,9 +7,11 @@ chai.use(chaiHttp)
 const app = require('../src/app.js')
 
 const knex = require('../db/knex.js')
-const {ajaxHandler} = require ('../src/ajaxHandler.js')
 
-describe('API ajaxHandler', () => {
+const {dbHandler} = require ('../src/dbHandler.js')
+const {loginHandler} = require ('../src/loginHandler.js')
+
+describe('API loginHandler.js', () => {
 
   beforeEach(async () =>
     await knex.migrate.rollback()
@@ -25,18 +27,17 @@ describe('API ajaxHandler', () => {
     await knex.migrate.rollback()
   )
 
-  it('`handleIfUnregisteredUser` should insert new user to table `unregistered`', async () => {
-    const email = 'testuser@test.com'
+  const email = 'testuser@test.com'
 
-    const id_from_users = await ajaxHandler.getColumn ('id', 'users', {email})
+  it('`handleIfUnregisteredUser` should insert new user to table `unregistered`', async () => {
+    const id_from_users = await dbHandler.getColumn ('id', 'users', {email})
     expect (id_from_users).to.equal(undefined)
 
-    const unregisteredUser: boolean = await ajaxHandler.handleIfUnregisteredUser(email)
+    const unregisteredUser: boolean = await loginHandler.handleIfUnregisteredUser(email)
     expect (unregisteredUser).to.equal(true)
 
-    const id_from_unregistered = await ajaxHandler.getColumn ('id', 'unregistered', {email})
+    const id_from_unregistered = await dbHandler.getColumn ('id', 'unregistered', {email})
     expect (id_from_unregistered).to.not.equal(undefined)
-
   })
 
 })
