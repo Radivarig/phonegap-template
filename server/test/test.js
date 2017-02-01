@@ -87,8 +87,21 @@ describe('API loginHandler.js', () => {
       expect (id_users_after).to.not.equal(undefined)
 
     })
+    it('should not move existing user to table `users`', async () => {throw 'todo'})
 
-    it('should return error object if tokens do not match', async () => {throw 'todo'})
+    it('should return error `user_not_found` if user is not in table `users` or table `unconfirmed`', async () => {throw "todo"})
+
+    it('should return error `token_mismatch` if tokens do not match', async () => {
+      // adding new user to unconfirmed
+      const token = 'token'
+      const token_different = 'token_different'
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+
+      const res = await loginHandler.confirmToken (email, token_different)
+      expect (res).to.be.an('object')
+      expect (res).to.have.property('error')
+      expect (res.error.message).to.equal('token_mismatch')
+    })
 
     it('should insert new session to table `sessions`', async () => {throw 'todo'})
   })

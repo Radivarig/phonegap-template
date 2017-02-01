@@ -33,15 +33,23 @@ export const loginHandler = {
   },
 
   confirmToken: async (email: string, token: string): Promise<Object | void> => {
-    const id = await dbHandler.getColumn ('id', 'users', {email})
-    if (! id) {
-      const id_unconfirmed = dbHandler.getColumn ('id', tables.unconfirmed, {email})
-      if (id_unconfirmed) {
-        await knex(tables.unconfirmed).where({email}).del()
-        await knex.insert({email}).into(tables.users)
-      }
-      else return {error: ''}
-    }
+    let id = await dbHandler.getColumn ('id', tables.users, {email})
+    const id_unconfirmed = await dbHandler.getColumn ('id', tables.unconfirmed, {email})
+    const token_unconfirmed = await dbHandler.getColumn('token', tables.unconfirmed, {email})
+
+    if (! id && ! id_unconfirmed)
+      return {error: {message: 'user_not_found'}}
+
+    if (token_unconfirmed !== token)
+      return {error: {message: 'token_mismatch'}}
+
+    // remove from unconfirmed
+    await knex(tables.unconfirmed).where({email}).del()
+    // add new user to table users
+    if (! id)
+      id = (await knex.insert({email}).into(tables.users).returning('id'))[0]
+
+    // handle session
   },
 
 }
