@@ -1,4 +1,4 @@
-const tableNames = ['users', 'unregistered']
+const tableNames = ['users', 'unregistered', 'unconfirmed']
 
 exports.up = async (knex) => {
   for (const tableName of tableNames) {
@@ -12,6 +12,12 @@ exports.up = async (knex) => {
         table.increments('id').primary()
         table.string('email')
       }
+      else if (tableName == 'unconfirmed') {
+        table.increments('id').primary()
+        table.string('email')
+        table.string('token')
+      }
+      else throw `unmatched table name: \`${tableName}\``
     })
   }
 

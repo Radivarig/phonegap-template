@@ -3,6 +3,7 @@ const {dbHandler} = require ('./dbHandler.js')
 
 export const tables = {
   unregistered: 'unregistered',
+  unconfirmed: 'unconfirmed',
   users: 'users',
 }
 
@@ -21,4 +22,14 @@ export const loginHandler = {
 
   insertUserToUnregistered: async (email: string): Promise<number> =>
   (await knex.insert({email}).into(tables.unregistered).returning('id'))[0],
+
+  insertOrUpdateTokenToUnconfirmed: async (email: string, token: string): Promise<number> => {
+    let id = await dbHandler.getColumn ('id', tables.unconfirmed, {email})
+    if (! id)
+      id = (await knex.insert({email, token}).into(tables.unconfirmed).returning('id'))[0]
+    else
+      await knex(tables.unconfirmed).where({email}).update({token})
+    return id
+  },
+
 }
