@@ -1,4 +1,8 @@
-const tableNames = ['users', 'unregistered', 'unconfirmed']
+const {tables} = require('../../src/loginHandler.js')
+
+const tableNames = []
+for (const n in tables)
+  tableNames.push (tables[n])
 
 exports.up = async (knex) => {
   for (const tableName of tableNames) {
