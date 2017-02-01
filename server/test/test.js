@@ -132,7 +132,31 @@ describe('API loginHandler.js', () => {
       expect (res.error.message).to.equal('token_consumed')
     })
 
-
   })
+
+  describe('getSessionValidity', () => {
+    it('should return true if token is found in sessions, otherwise false', async () => {
+      const token = 'token'
+      const token_different = token + '_different'
+      const email_different = 'different_' + email
+
+      // login
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+      await loginHandler.confirmToken (email, token)
+
+      let is_session_valid = await loginHandler.getSessionValidity(email, token)
+      expect (is_session_valid).to.equal(true)
+
+      // different email
+      is_session_valid = await loginHandler.getSessionValidity(email_different, token)
+      expect (is_session_valid).to.equal(false)
+
+      // different token
+      is_session_valid = await loginHandler.getSessionValidity(email_different, token_different)
+      expect (is_session_valid).to.equal(false)
+
+    })
+  })
+
 
 })

@@ -61,4 +61,9 @@ export const loginHandler = {
     await knex(tables.users).where({email}).update({sessions})
   },
 
+  getSessionValidity: async (email: string, token: string): Promise<boolean> => {
+    const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
+    return (sessions && sessions[token]) != undefined
+  },
+
 }
