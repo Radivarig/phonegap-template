@@ -66,4 +66,31 @@ describe('API loginHandler.js', () => {
     })
   })
 
+  describe('confirmToken', () => {
+    it('should move new user from table `unregistered` to table `users`', async () => {
+      // adding new user to unconfirmed
+      const token = 'token'
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+
+      // new user should not exist in users
+      const id_users_before = await dbHandler.getColumn ('id', tables.users, {email})
+      expect (id_users_before).to.equal(undefined)
+
+      await loginHandler.confirmToken (email, token)
+
+      // new user should be removed from unregistered
+      const id_unregistered_after = await dbHandler.getColumn ('id', tables.unregistered, {email})
+      expect (id_unregistered_after).to.equal(undefined)
+
+      // new user should be added to table users
+      const id_users_after = await dbHandler.getColumn ('id', tables.users, {email})
+      expect (id_users_after).to.not.equal(undefined)
+
+    })
+
+    it('should return error object if tokens do not match', async () => {throw 'todo'})
+
+    it('should insert new session to table `sessions`', async () => {throw 'todo'})
+  })
+
 })
