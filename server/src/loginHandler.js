@@ -40,7 +40,7 @@ export const loginHandler = {
     return token
   },
 
-  confirmLoginToken: async (email: string, token: string): Promise<Object | void> => {
+  confirmLoginToken: async (email: string, token: string): Promise<Object> => {
     let id = await dbHandler.getColumn ('id', tables.users, {email})
     const id_unconfirmed = await dbHandler.getColumn ('id', tables.unconfirmed, {email})
     const token_unconfirmed = await dbHandler.getColumn('token', tables.unconfirmed, {email})
@@ -59,19 +59,20 @@ export const loginHandler = {
 
     // add session
     const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
+    // generate session
+    const session = randToken.generate(16)
 
-    // if called multiple times with same token
-    if (sessions[token])
-      return {error: {message: 'token_consumed'}}
-
-    // TODO add timestamp, agent
-    sessions[token] = {}
+    sessions[session] = {
+      created_at: new Date().getTime(),
+      // TODO agent
+    }
     await knex(tables.users).where({email}).update({sessions})
+    return {session}
   },
 
-  getSessionValidity: async (email: string, token: string): Promise<boolean> => {
+  getSessionValidity: async (email: string, session: string): Promise<boolean> => {
     const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
-    return (sessions && sessions[token]) !== undefined
+    return (sessions && sessions[session]) !== undefined
   },
 
   setData: async (email: string, toAssign: Object): void => {

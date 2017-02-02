@@ -139,43 +139,36 @@ describe('API loginHandler.js', () => {
     })
 
     it('should insert new session to table `sessions`', async () => {
-      const token = 'token'
-      await doLogin(email, token)
+      const {session} = await doLogin(email, 'token')
       const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
-      expect (sessions).to.have.property(token)
+      expect (sessions).to.have.property(session)
     })
 
-    it('should return error `token_consumed` if token exists in sessions', async () => {
-      const token = 'token'
-      // first login
-      await doLogin(email, token)
-      // second login with same token
-      const res = await doLogin(email, token)
-
-      expect (res).to.be.an('object')
-      expect (res).to.have.property('error')
-      expect (res.error.message).to.equal('token_consumed')
+    it('should return session string', async () => {
+      const {session} = await doLogin(email, 'token')
+      const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
+      expect (sessions).to.have.property(session)
     })
+
 
   })
 
   describe('getSessionValidity', () => {
     it('should return true if token is found in sessions, otherwise false', async () => {
-      const token = 'token'
-      const token_different = token + '_different'
       const email_different = 'different_' + email
 
-      await doLogin(email, token)
+      const {session} = await doLogin(email, 'token')
+      const session_different = session + '_different'
 
-      let is_session_valid = await loginHandler.getSessionValidity(email, token)
+      let is_session_valid = await loginHandler.getSessionValidity(email, session)
       expect (is_session_valid).to.equal(true)
 
       // different email
-      is_session_valid = await loginHandler.getSessionValidity(email_different, token)
+      is_session_valid = await loginHandler.getSessionValidity(email_different, session)
       expect (is_session_valid).to.equal(false)
 
-      // different token
-      is_session_valid = await loginHandler.getSessionValidity(email_different, token_different)
+      // different session
+      is_session_valid = await loginHandler.getSessionValidity(email, session_different)
       expect (is_session_valid).to.equal(false)
     })
   })
