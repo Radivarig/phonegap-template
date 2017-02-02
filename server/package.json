@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --progress --colors --build",
     "watch": "webpack --progress --colors --watch",
-    "start": "nodemon ./src/server.js --exec babel-node",
+    "start": "nodemon --trace-warnings --exec babel-node ./src/server.js",
     "start:production": "npm run build; NODE_ENV=production nodemon ./build/backend.js",
     "test": "mocha --compilers js:babel-core/register",
     "test:watch": "mocha --compilers js:babel-core/register --watch"
