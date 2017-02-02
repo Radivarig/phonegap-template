@@ -78,10 +78,15 @@ describe('API loginHandler.js', () => {
       expect (id_users).to.equal(undefined)
     })
 
-    it('should add new user to table `unregistered`', async () => {
+    it('should insert/update new user to table `unregistered`', async () => {
       await loginHandler.handleRequestLoginToken(email)
       const id_unregistered = await dbHandler.getColumn('id', tables.unregistered, {email})
       expect (id_unregistered).to.not.equal(undefined)
+
+      // second request
+      await loginHandler.handleRequestLoginToken(email)
+      const items = await knex(tables.unregistered).select('id').where({email})
+      expect (items.length).to.equal(1)
     })
 
     it('should return token string', async () => {
