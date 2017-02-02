@@ -174,16 +174,8 @@ describe('API loginHandler.js', () => {
   })
 
   describe('getData', () => {
-    it('should return an object with keys from arg `propList`', async () => {
+    it('should return an object with keys from arg `data_properties`', async () => {
       await doLogin(email, 'token')
-
-      // single property
-      const single_property = 'single_property'
-      const data_single = await loginHandler.getData(email, single_property)
-      expect (data_single).to.be.an('object')
-      expect (data_single).to.have.property(single_property)
-
-      // list of properties
       const list_of_properties = ['list', 'of', 'properties']
       const data_multiple = await loginHandler.getData(email, list_of_properties)
       expect (data_multiple).to.be.an('object')

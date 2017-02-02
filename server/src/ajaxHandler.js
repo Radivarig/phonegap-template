@@ -14,6 +14,8 @@ export const ajaxHandler = {
       method,
       token,
       session,
+      data,
+      data_properties,
     } = req.body
 
     const packResponse = (returnObject: Object = {}) => {
@@ -49,6 +51,21 @@ export const ajaxHandler = {
 
     if (! await loginHandler.getSessionValidity(email, session))
       return packResponse({error: {message: 'invalid_session'}})
+
+    // set data
+    if (method === 'set_data') {
+      if (typeof(data) !== 'object')
+        return packResponse ({error: {message: 'object_data_required'}})
+
+      return packResponse(await loginHandler.setData(email, data))
+    }
+    // get data
+    if (method === 'get_data') {
+      if (! Array.isArray(data_properties))
+        return packResponse ({error: {message: 'list_data_properties_required'}})
+
+      return packResponse({data: await loginHandler.getData(email, data_properties)})
+    }
 
     // call this last if nothing else returns
     return packResponse({error: {message: 'invalid_method'}})

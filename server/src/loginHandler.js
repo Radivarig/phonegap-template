@@ -81,17 +81,17 @@ export const loginHandler = {
     await knex(tables.users).where({email}).update({data})
   },
 
-  getData: async (email: string, propList: Array<string> | string): Promise<Object> => {
-    const data = await dbHandler.getColumn ('data', tables.users, {email})
-    const returnData = {}
+  getData: async (email: string, dataProperties: Array<string> | string): Promise<Object> => {
+    const allData = await dbHandler.getColumn ('data', tables.users, {email})
+    const data = {}
 
-    if (typeof (propList) === 'string')
-      propList = [propList]
+    if (typeof (dataProperties) === 'string')
+      dataProperties = [dataProperties]
 
-    for (const p of propList)
-      returnData[p] = data[p]
+    for (const p of dataProperties)
+      data[p] = allData[p]
 
-    return returnData
+    return data
   },
 
 }
