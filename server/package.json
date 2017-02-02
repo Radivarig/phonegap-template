@@ -8,8 +8,7 @@
     "build": "webpack --progress --colors --build",
     "watch": "webpack --progress --colors --watch",
     "start": "nodemon ./src/server.js --exec babel-node",
-    "start:build": "nodemon ./build/backend.js",
-    "start:production": "NODE_ENV=production nodemon ./build/backend.js",
+    "start:production": "npm run build; NODE_ENV=production nodemon ./build/backend.js",
     "test": "mocha --compilers js:babel-core/register",
     "test:watch": "mocha --compilers js:babel-core/register --watch"
   },
