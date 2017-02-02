@@ -20,16 +20,17 @@ beforeEach(async () =>
 afterEach(async () => await knex.migrate.rollback())
 
 const email = 'testuser@test.com'
+const doLogin = async (email: string, token: string) => {
+  await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+  return await loginHandler.confirmToken (email, token)
+}
+
 describe('API loginHandler.js', () => {
 
   describe('getIsUserRegistered', () => {
     it('should return correct bool', async () => {
       expect (await loginHandler.getIsUserRegistered(email)).to.equal(false)
-
-      const token = 'token'
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      await loginHandler.confirmToken (email, token)
-
+      await doLogin(email, 'token')
       expect (await loginHandler.getIsUserRegistered(email)).to.equal(true)
     })
   })
@@ -68,13 +69,12 @@ describe('API loginHandler.js', () => {
     it('should move new user from table `unregistered` to table `users`', async () => {
       // adding new user to unconfirmed
       const token = 'token'
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
 
       // new user should not exist in users
       const id_users_before = await dbHandler.getColumn ('id', tables.users, {email})
       expect (id_users_before).to.equal(undefined)
 
-      await loginHandler.confirmToken (email, token)
+      await doLogin(email, token)
 
       // new user should be removed from unregistered
       const id_unregistered_after = await dbHandler.getColumn ('id', tables.unregistered, {email})
@@ -87,7 +87,7 @@ describe('API loginHandler.js', () => {
     })
 
     it('should return error `user_not_found` if user is not in table `users` or table `unconfirmed`', async () => {
-      const res = await loginHandler.confirmToken (email, '')
+      const res = await loginHandler.confirmToken ('anyemail@test.com', 'any_token')
       expect (res).to.be.an('object')
       expect (res).to.have.property('error')
       expect (res.error.message).to.equal('user_not_found')
@@ -97,9 +97,11 @@ describe('API loginHandler.js', () => {
       // adding new user to unconfirmed
       const token = 'token'
       const token_different = token + '_different'
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
 
+      // try to confirm login with different token
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
       const res = await loginHandler.confirmToken (email, token_different)
+
       expect (res).to.be.an('object')
       expect (res).to.have.property('error')
       expect (res.error.message).to.equal('token_mismatch')
@@ -107,23 +109,17 @@ describe('API loginHandler.js', () => {
 
     it('should insert new session to table `sessions`', async () => {
       const token = 'token'
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      await loginHandler.confirmToken (email, token)
-
+      await doLogin(email, token)
       const sessions = await dbHandler.getColumn ('sessions', tables.users, {email})
       expect (sessions).to.have.property(token)
     })
 
     it('should return error `token_consumed` if token exists in sessions', async () => {
       const token = 'token'
-
       // first login
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      await loginHandler.confirmToken (email, token)
-
+      await doLogin(email, token)
       // second login with same token
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      const res = await loginHandler.confirmToken (email, token)
+      const res = await doLogin(email, token)
 
       expect (res).to.be.an('object')
       expect (res).to.have.property('error')
@@ -138,9 +134,7 @@ describe('API loginHandler.js', () => {
       const token_different = token + '_different'
       const email_different = 'different_' + email
 
-      // login
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      await loginHandler.confirmToken (email, token)
+      await doLogin(email, token)
 
       let is_session_valid = await loginHandler.getSessionValidity(email, token)
       expect (is_session_valid).to.equal(true)
@@ -157,10 +151,7 @@ describe('API loginHandler.js', () => {
 
   describe('getData', () => {
     it('should return an object with keys from arg `propList`', async () => {
-      const token = 'token'
-      // login
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      await loginHandler.confirmToken (email, token)
+      await doLogin(email, 'token')
 
       // single property
       const single_property = 'single_property'
@@ -179,10 +170,7 @@ describe('API loginHandler.js', () => {
 
   describe('setData', () => {
     it('should assign passed object to json `data`', async () => {
-      const token = 'token'
-      // login
-      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      await loginHandler.confirmToken (email, token)
+      await doLogin(email, 'token')
 
       const toAssign = {
         num_val: 45,
