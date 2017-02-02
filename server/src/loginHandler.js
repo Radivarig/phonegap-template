@@ -12,8 +12,12 @@ export const loginHandler = {
   getIsUserRegistered: async (email: string): Promise<boolean> =>
     (await dbHandler.getColumn('id', tables.users, {email})) !== undefined,
 
-  insertUserToUnregistered: async (email: string): Promise<number> =>
-    (await knex.insert({email}).into(tables.unregistered).returning('id'))[0],
+  insertOrUpdateUserToUnregistered: async (email: string): Promise<number> => {
+    const id = await dbHandler.getColumn ('id', tables.unregistered, {email})
+    if (id)
+      return id
+    return (await knex.insert({email}).into(tables.unregistered).returning('id'))[0]
+  },
 
   insertOrUpdateTokenToUnconfirmed: async (email: string, token: string): Promise<number> => {
     let id = await dbHandler.getColumn ('id', tables.unconfirmed, {email})
@@ -26,8 +30,9 @@ export const loginHandler = {
 
   handleRequestLoginToken: async (email): Promise<string> => {
     // if unregistered add to table unregistered
-    if (! await loginHandler.getIsUserRegistered(email))
-      await loginHandler.insertUserToUnregistered(email)
+    const isRegistered = await loginHandler.getIsUserRegistered(email)
+    if (! isRegistered)
+      await loginHandler.insertOrUpdateUserToUnregistered(email)
 
     // add to table unconfirmed
     const token = randToken.generate(8)
