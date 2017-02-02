@@ -1,5 +1,6 @@
 const knex = require('../db/knex.js')
 const {dbHandler} = require ('./dbHandler.js')
+const randToken = require ('rand-token')
 
 export const tables = {
   unregistered: 'unregistered',
@@ -21,6 +22,17 @@ export const loginHandler = {
     else
       await knex(tables.unconfirmed).where({email}).update({token})
     return id
+  },
+
+  handleRequestLoginToken: async (email): Promise<string> => {
+    // if unregistered add to table unregistered
+    if (! await loginHandler.getIsUserRegistered(email))
+      await loginHandler.insertUserToUnregistered(email)
+
+    // add to table unconfirmed
+    const token = randToken.generate(8)
+    await loginHandler.insertOrUpdateTokenToUnconfirmed(email, token)
+    return token
   },
 
   confirmToken: async (email: string, token: string): Promise<Object | void> => {

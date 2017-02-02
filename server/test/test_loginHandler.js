@@ -65,6 +65,32 @@ describe('API loginHandler.js', () => {
     })
   })
 
+  describe('handleRequestLoginToken', () => {
+    it('should add user to table `unconfirmed`', async () => {
+      await loginHandler.handleRequestLoginToken(email)
+      const id_unconfirmed = await dbHandler.getColumn('id', tables.unconfirmed, {email})
+      expect (id_unconfirmed).to.not.equal(undefined)
+    })
+
+    it('should not add new user to table `users`', async () => {
+      await loginHandler.handleRequestLoginToken(email)
+      const id_users = await dbHandler.getColumn('id', tables.users, {email})
+      expect (id_users).to.equal(undefined)
+    })
+
+    it('should add new user to table `unregistered`', async () => {
+      await loginHandler.handleRequestLoginToken(email)
+      const id_unregistered = await dbHandler.getColumn('id', tables.unregistered, {email})
+      expect (id_unregistered).to.not.equal(undefined)
+    })
+
+    it('should return token string', async () => {
+      const token: string = await loginHandler.handleRequestLoginToken(email)
+      expect (token).to.be.a('string')
+    })
+
+  })  
+
   describe('confirmToken', () => {
     it('should move new user from table `unregistered` to table `users`', async () => {
       // adding new user to unconfirmed
