@@ -20,19 +20,17 @@ beforeEach(async () =>
 afterEach(async () => await knex.migrate.rollback())
 
 const email = 'testuser@test.com'
-
 describe('API loginHandler.js', () => {
 
-  describe('handleIfUnregisteredUser', () => {
-    it('should insert new user to table `unregistered`', async () => {
-      const id_users = await dbHandler.getColumn ('id', tables.users, {email})
-      expect (id_users).to.equal(undefined)
+  describe('getIsUserRegistered', () => {
+    it('should return correct bool', async () => {
+      expect (await loginHandler.getIsUserRegistered(email)).to.equal(false)
 
-      const unregisteredUser: boolean = await loginHandler.handleIfUnregisteredUser(email)
-      expect (unregisteredUser).to.equal(true)
+      const token = 'token'
+      await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
+      await loginHandler.confirmToken (email, token)
 
-      const id_unregistered = await dbHandler.getColumn ('id', tables.unregistered, {email})
-      expect (id_unregistered).to.not.equal(undefined)
+      expect (await loginHandler.getIsUserRegistered(email)).to.equal(true)
     })
   })
 
