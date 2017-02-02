@@ -22,7 +22,7 @@ afterEach(async () => await knex.migrate.rollback())
 const email = 'testuser@test.com'
 const doLogin = async (email: string, token: string) => {
   await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-  return await loginHandler.confirmToken (email, token)
+  return await loginHandler.confirmLoginToken (email, token)
 }
 
 describe('API loginHandler.js', () => {
@@ -91,7 +91,7 @@ describe('API loginHandler.js', () => {
 
   })  
 
-  describe('confirmToken', () => {
+  describe('confirmLoginToken', () => {
     it('should move new user from table `unregistered` to table `users`', async () => {
       // adding new user to unconfirmed
       const token = 'token'
@@ -113,7 +113,7 @@ describe('API loginHandler.js', () => {
     })
 
     it('should return error `user_not_found` if user is not in table `users` or table `unconfirmed`', async () => {
-      const res = await loginHandler.confirmToken ('anyemail@test.com', 'any_token')
+      const res = await loginHandler.confirmLoginToken ('anyemail@test.com', 'any_token')
       expect (res).to.be.an('object')
       expect (res).to.have.property('error')
       expect (res.error.message).to.equal('user_not_found')
@@ -126,7 +126,7 @@ describe('API loginHandler.js', () => {
 
       // try to confirm login with different token
       await loginHandler.insertOrUpdateTokenToUnconfirmed (email, token)
-      const res = await loginHandler.confirmToken (email, token_different)
+      const res = await loginHandler.confirmLoginToken (email, token_different)
 
       expect (res).to.be.an('object')
       expect (res).to.have.property('error')

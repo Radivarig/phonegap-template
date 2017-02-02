@@ -35,7 +35,7 @@ export const loginHandler = {
     return token
   },
 
-  confirmToken: async (email: string, token: string): Promise<Object | void> => {
+  confirmLoginToken: async (email: string, token: string): Promise<Object | void> => {
     let id = await dbHandler.getColumn ('id', tables.users, {email})
     const id_unconfirmed = await dbHandler.getColumn ('id', tables.unconfirmed, {email})
     const token_unconfirmed = await dbHandler.getColumn('token', tables.unconfirmed, {email})
