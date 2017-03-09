@@ -14,7 +14,7 @@ module.exports = {
     fix: true
   },
   resolve: {
-    modulesDirectories: ['src/module_components', 'src/redux'],
+    modulesDirectories: ['src/'],
     fallback: __dirname +"/node_modules",
     extensions: ['', '.js', '.jsx'],
   }
