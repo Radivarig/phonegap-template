@@ -1,21 +1,30 @@
+const path = require ("path")
+
 module.exports = {
-  entry: "./src/entry.jsx",
+  entry: [
+    'react-hot-loader/patch',
+    'regenerator-runtime/runtime',
+    path.resolve (__dirname, "src", "entry.jsx"),
+  ],
   output: {
-    path: "./",
-    filename: "bundle.js"
+    path: path.resolve (__dirname, "build"),
+    filename: "bundle.js",
   },
   devtool: "source-map",
   module: {
-    loaders: [
-      { test: /\.jsx?$/, loaders: ['babel', 'eslint'], exclude: /node_modules/ }
-    ]
-  },
-  eslint: {
-    fix: true
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loaders: ["babel-loader", "eslint-loader?fix=true"],
+        exclude: [path.resolve(__dirname, "node_modules")],
+      },
+    ],
   },
   resolve: {
-    modulesDirectories: ['src/'],
-    fallback: __dirname +"/node_modules",
-    extensions: ['', '.js', '.jsx'],
+    modules: [
+      "node_modules",
+      path.resolve (__dirname, "src"),
+    ],
+    extensions: [".js", ".jsx"],
   }
 }

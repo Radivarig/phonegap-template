@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   getRequestResponseDispatches(dispatch)
 
-module.exports = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 ) (App)
