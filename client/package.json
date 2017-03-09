@@ -5,9 +5,9 @@
   "author": "Reslav Hollos",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.config.js --progress --colors --inline --hot",
-    "build": "webpack --config webpack.config.js --progress --colors --build",
-    "watch": "webpack --config webpack.config.js --progress --colors --watch"
+    "dev": "webpack-dev-server --inline --hot",
+    "build": "webpack --build",
+    "watch": "webpack --watch"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
