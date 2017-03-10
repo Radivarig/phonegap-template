@@ -6,6 +6,16 @@
     ["flow-runtime", {
         "assert": true,
     }],
+  ],
 
-  ]
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-async-to-generator"
+      ],
+      "presets": [
+        "es2015"
+      ]
+    },
+  },
 }
