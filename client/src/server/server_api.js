@@ -1,5 +1,12 @@
-const ajax_URL = require('./ajax_URL')
+import ajax_URL from './ajax_URL'
+import request from 'superagent'
 
+export const ajax_post = (data) =>
+  request
+  .post(`${ajax_URL}/ajax_post`)
+  .send(data)
+
+/*
 const request = (method, url, data) =>
   new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest()
@@ -9,11 +16,4 @@ const request = (method, url, data) =>
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(JSON.stringify(data))
   })
-
-const server_api = {
-  ajax_post (data) {
-    return request('POST', `${ajax_URL}/ajax_post`, data)
-  },
-}
-
-module.exports = server_api
+*/

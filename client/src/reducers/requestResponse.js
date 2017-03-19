@@ -24,7 +24,7 @@ export const actions = {
         .then((res) =>
           dispatch({
             type: 'SUBMIT_REQUEST', status: 'SUCCESS',
-            response: JSON.stringify(res),
+            response: JSON.stringify(res.body),
           })
         )
         .catch((err) => {
